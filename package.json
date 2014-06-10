@@ -1,0 +1,49 @@
+{
+  "name": "grunt-tpl-compiler",
+  "description": "Grunt plugin for juicer-based template compile to kissy module",
+  "version": "0.1.0",
+  "homepage": "https://github.com/dickeylth/grunt-tpl-compiler",
+  "author": {
+    "name": "弘树",
+    "email": "tiehang.lth@alibaba-inc.com",
+    "url": "http://dickeylth.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dickeylth/grunt-tpl-compiler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dickeylth/grunt-tpl-compiler/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/dickeylth/grunt-tpl-compiler/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.2"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "ast-query": "^0.2.4",
+    "htmlmin": "0.0.2",
+    "jquery": "^2.1.1",
+    "jsdom": "^0.10.6",
+    "juicer": "^0.6.5-stable-p2"
+  }
+}
