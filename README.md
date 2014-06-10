@@ -114,12 +114,8 @@ grunt.initConfig({
 	</body>
 	
 	```
-
-	其中指定了两个模板：
-
-	- `<div id="J_Test" data-tpl="ProdList">...</div>`
-	- `<section data-tpl="MoreList"></section>`
-
+	
+	其中指定了两个模板：`<div id="J_Test" data-tpl="ProdList">...</div>` 和 `<section data-tpl="MoreList"></section>`。
 
 2. 执行 `grunt tpl_compiler`，生成对应的 JavaScript 模板文件：
 
