@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('tpl_compiler', 'Grunt plugin for juicer-based template compile to kissy module', function () {
 		// Merge task-specific and/or target-specific options with these defaults.
 		var options = this.options({
-			ext: 'tpl'
+			ext: '-tpl'
 		});
 
 		var jsTpl = fs.readFileSync(path.join(__dirname, './template.js.tpl')).toString();
@@ -46,13 +46,11 @@ module.exports = function (grunt) {
 			});
 
 			// jsdom 解析模板所在 HTML 的 DOM
-			var isFragment = false;
 			var document = jsdom(src),
 				$;
 			try {
 				$ = jquery(document.createWindow());
 			} catch (e) {
-				isFragment = true;
 				document = jsdom('<html><head></head><body>' + src + '</body>');
 				$ = jquery(document.createWindow());
 			}
@@ -82,7 +80,7 @@ module.exports = function (grunt) {
 				juicer.set('strip',false);
 				var toJsContent = juicer(jsTpl, {
 					templates: templates,
-					page: 'test'
+					page: basename
 				});
 
 				// Write the destination file.
