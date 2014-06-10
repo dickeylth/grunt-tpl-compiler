@@ -84,22 +84,17 @@ grunt.initConfig({
 
 	[src/pages/index.tpl.html]
 
-``` html
+	``` html
 	
-	<!DOCTYPE html>
-	<html>
-	<head lang="en">
-    	<meta charset="UTF-8">
-    	<title>Title</title>
-	</head>
-	<body>
-    	<div class="page">
+		...
+		<body>
+    		<div class="page">
 
-        	<div id="J_Test" data-tpl="ProdList">
-            	<h2>${title}</h2>
-            	<ul class="prod-list">
-                	{@each prods as prod}
-                	<li class="prod-item">${prod.name} - ${prod.price}</li>
+        		<div id="J_Test" data-tpl="ProdList">
+            		<h2>${title}</h2>
+            		<ul class="prod-list">
+                		{@each prods as prod}
+                		<li class="prod-item">${prod.name} - ${prod.price}</li>
                 	{@/each}
             	</ul>
         	</div>
@@ -117,72 +112,71 @@ grunt.initConfig({
 
     	</div>
 	</body>
-	</html>
 	
-```
+	```
 
-其中指定了两个模板：
+	其中指定了两个模板：
 
-- `<div id="J_Test" data-tpl="ProdList">...</div>`
-- `<section data-tpl="MoreList"></section>`
+	- `<div id="J_Test" data-tpl="ProdList">...</div>`
+	- `<section data-tpl="MoreList"></section>`
 
 
 2. 执行 `grunt tpl_compiler`，生成对应的 JavaScript 模板文件：
 
 	[src/pages/index-tpl.js]
 	
-``` javascript
-	/**
- 	 * KISSY Template Module for test
- 	 */
-	KISSY.add(function (S, Juicer) {
-    	'use strict';
-    	/**
-    	 * 维护所有用到的模板
-    	 * @class Template
-    	 * @constructor
-    	 */
-     	var templates = {
-            ProdList: '<div id="J_Test" data-tpl="ProdList"><h2>${title}</h2><ul class="prod-list">{@each prods as prod}<li class="prod-item">${prod.name} - ${prod.price}</li> {@/each} </ul></div>',
-            MoreList: '<section data-tpl="MoreList"><dl>{@each moreList as item}<dt>${item.title}</dt><dd>${item.desc}</dd> {@/each} </dl></section>'
-        };
-    	return {
-        	/**
-         	 * 注册模板自定义函数
-         	 * @param name 需要替换的模板中用到的名字
-         	 * @param fn 自定义函数
-         	 */
-        	register: function (name, fn) {
-            	Juicer.register(name, fn);
-        	},
-        	/**
-         	 * 覆盖已有模板
-         	 * @param key {String} template 模板键
-         	 * @param tmpl {String} 模板
-         	 */
-        	set: function (key, tmpl) {
-            	templates[key] = tmpl;
-        	},
-        	/**
-         	 * 获取已有模板
-         	 * @param key {String} 模板Key
-         	 * @returns {String} 模板内容
-         	 */
-        	get: function (key) {
-            	return templates[key];
-        	},
-        	/**
-         	 * 根据指定的模板key和数据渲染生成html
-         	 * @param key 模板的key
-         	 * @param data json数据
-         	 * @returns {String}
-         	 */
-        	render: function (key, data) {
-            	return Juicer(templates[key], data);
-        	}
-    	};
-	}, { requires: ['gallery/juicer/1.3/index'] });
-```
+	``` javascript
+		/**
+ 	 	 * KISSY Template Module for test
+ 	 	 */
+		KISSY.add(function (S, Juicer) {
+    		'use strict';
+    		/**
+    	 	 * 维护所有用到的模板
+    	 	 * @class Template
+    	 	 * @constructor
+    	 	 */
+     		var templates = {
+            	ProdList: '<div id="J_Test" data-tpl="ProdList"><h2>${title}</h2><ul class="prod-list">{@each prods as prod}<li class="prod-item">${prod.name} - ${prod.price}</li> {@/each} </ul></div>',
+            	MoreList: '<section data-tpl="MoreList"><dl>{@each moreList as item}<dt>${item.title}</dt><dd>${item.desc}</dd> {@/each} </dl></section>'
+        	};
+    		return {
+        		/**
+         	 	 * 注册模板自定义函数
+         	 	 * @param name 需要替换的模板中用到的名字
+         	 	 * @param fn 自定义函数
+         	 	 */
+        		register: function (name, fn) {
+            		Juicer.register(name, fn);
+        		},
+        		/**
+         	 	 * 覆盖已有模板
+         	 	 * @param key {String} template 模板键
+         	 	 * @param tmpl {String} 模板
+         	 	 */
+        		set: function (key, tmpl) {
+            		templates[key] = tmpl;
+        		},
+        		/**
+         	 	 * 获取已有模板
+         	 	 * @param key {String} 模板Key
+         	 	 * @returns {String} 模板内容
+         	 	 */
+        		get: function (key) {
+            		return templates[key];
+        		},
+        		/**
+         	 	 * 根据指定的模板key和数据渲染生成html
+         	 	 * @param key 模板的key
+         	 	 * @param data json数据
+         	 	 * @returns {String}
+         	 	 */
+        		render: function (key, data) {
+            		return Juicer(templates[key], data);
+        		}
+    		};
+		}, { requires: ['gallery/juicer/1.3/index'] });
+	```
 
 3. 这样其他模块中需要依赖模板的地方，直接通过 KISSY 模块 `require` 该 JavaScript 模板文件即可，通用的 `register` 方法也可以写在该 JavaScript 模板文件中。 
 
