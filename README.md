@@ -52,6 +52,7 @@ Default value:
 	{
 		'&lt;': '<',
 		'&gt;': '>',
+		‘&amp’: '&',
 		'\xA5': '&yen;',
 		'\xA9': '&copy;'
 	}
@@ -67,7 +68,10 @@ In this example, the default options are used to do something with whatever. So 
 grunt.initConfig({
   tpl_compiler: {
 	options: {
-		ext: '-tpl'
+		ext: '-tpl',
+		replaceEscapeMap: {
+			'\xB0': '&deg;'
+		}
 	},
 	main: {
 		files: [
@@ -199,5 +203,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-- [0.1.2] Bugfix for html escape
+- [0.1.3] Bugfix for html escape
 - [0.1.0] 基本功能完成

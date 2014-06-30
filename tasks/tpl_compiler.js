@@ -29,10 +29,11 @@ module.exports = function (grunt) {
 		var defaultEscapeMap = {
 			'&lt;': '<',
 			'&gt;': '>',
+			'&amp;': '&',
 			'\xA5': '&yen;',
 			'\xA9': '&copy;'
 		};
-		var replaceEscapeMap = grunt.option('replaceEscapeMap');
+		var replaceEscapeMap = options.replaceEscapeMap;
 		// 合并用户的避免转义配置
 		if(replaceEscapeMap){
 			for(var i in replaceEscapeMap){
@@ -80,7 +81,7 @@ module.exports = function (grunt) {
 				// 处理字符转义 bug
 				for(var i in defaultEscapeMap){
 					if(defaultEscapeMap.hasOwnProperty(i)){
-						tplValue = tplValue.replace(i, defaultEscapeMap[i]);
+						tplValue = tplValue.replace(new RegExp(i, 'igm'), defaultEscapeMap[i]);
 					}
 				}
 				templates.push({
