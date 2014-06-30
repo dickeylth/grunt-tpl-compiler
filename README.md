@@ -45,6 +45,19 @@ Default value: `'tpl'`
 
 生成 js 文件的后缀字符串
 
+#### options.replaceEscapeMap
+Type: `Object`
+Default value: 
+
+	{
+		'&lt;': '<',
+		'&gt;': '>',
+		'\xA5': '&yen;',
+		'\xA9': '&copy;'
+	}
+
+处理 html 压缩时带上的转义
+
 ### Usage Examples
 
 #### Default Options
@@ -186,4 +199,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-[0.1.0] 基本功能完成
+- [0.1.2] Bugfix for html escape
+- [0.1.0] 基本功能完成

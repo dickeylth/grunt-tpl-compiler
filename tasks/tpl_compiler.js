@@ -26,6 +26,21 @@ module.exports = function (grunt) {
 		var options = this.options({
 			ext: '-tpl'
 		});
+		var defaultEscapeMap = {
+			'&lt;': '<',
+			'&gt;': '>',
+			'\xA5': '&yen;',
+			'\xA9': '&copy;'
+		};
+		var replaceEscapeMap = grunt.option('replaceEscapeMap');
+		// 合并用户的避免转义配置
+		if(replaceEscapeMap){
+			for(var i in replaceEscapeMap){
+				if(replaceEscapeMap.hasOwnProperty(i) && !(i in defaultEscapeMap)){
+					defaultEscapeMap[i] = replaceEscapeMap[i];
+				}
+			}
+		}
 
 		var jsTpl = fs.readFileSync(path.join(__dirname, './template.js.tpl')).toString();
 
@@ -59,11 +74,18 @@ module.exports = function (grunt) {
 			var templates = [];
 			$('[data-tpl]').each(function(idx, node){
 				var tplKey = $(node).attr('data-tpl');
+				var tplValue = htmlmin(node.outerHTML, {
+					collapseWhitespace: true
+				});
+				// 处理字符转义 bug
+				for(var i in defaultEscapeMap){
+					if(defaultEscapeMap.hasOwnProperty(i)){
+						tplValue = tplValue.replace(i, defaultEscapeMap[i]);
+					}
+				}
 				templates.push({
 					key: tplKey,
-					value: htmlmin(node.outerHTML, {
-						collapseWhitespace: true
-					})
+					value: tplValue
 				});
 			});
 
