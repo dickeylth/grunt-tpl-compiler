@@ -12,9 +12,7 @@ var fs = require('fs');
 var path = require('path');
 var program = require("ast-query");
 var juicer = require('juicer');
-var jsdom = require('jsdom').jsdom;
-var jquery = require('jquery');
-var htmlmin = require('htmlmin');
+var cheerio = require('cheerio');
 
 module.exports = function (grunt) {
 
@@ -26,22 +24,6 @@ module.exports = function (grunt) {
 		var options = this.options({
 			ext: '-tpl'
 		});
-		var defaultEscapeMap = {
-			'&lt;': '<',
-			'&gt;': '>',
-			'&amp;': '&',
-			'\xA5': '&yen;',
-			'\xA9': '&copy;'
-		};
-		var replaceEscapeMap = options.replaceEscapeMap;
-		// 合并用户的避免转义配置
-		if(replaceEscapeMap){
-			for(var i in replaceEscapeMap){
-				if(replaceEscapeMap.hasOwnProperty(i) && !(i in defaultEscapeMap)){
-					defaultEscapeMap[i] = replaceEscapeMap[i];
-				}
-			}
-		}
 
 		var jsTpl = fs.readFileSync(path.join(__dirname, './template.js.tpl')).toString();
 
@@ -61,29 +43,18 @@ module.exports = function (grunt) {
 				return grunt.file.read(filepath);
 			});
 
-			// jsdom 解析模板所在 HTML 的 DOM
-			var document = jsdom(src),
-				$;
-			try {
-				$ = jquery(document.createWindow());
-			} catch (e) {
-				document = jsdom('<html><head></head><body>' + src + '</body>');
-				$ = jquery(document.createWindow());
-			}
+			// cheerio 解析模板所在 HTML 的 DOM
+			src = src.join('');
+			var $ = cheerio.load(src, {
+				normalizeWhitespace: true,
+				decodeEntities: false
+			});
 
 			// 获取各个指定的模板
 			var templates = [];
 			$('[data-tpl]').each(function(idx, node){
 				var tplKey = $(node).attr('data-tpl');
-				var tplValue = htmlmin(node.outerHTML, {
-					collapseWhitespace: true
-				});
-				// 处理字符转义 bug
-				for(var i in defaultEscapeMap){
-					if(defaultEscapeMap.hasOwnProperty(i)){
-						tplValue = tplValue.replace(new RegExp(i, 'igm'), defaultEscapeMap[i]);
-					}
-				}
+				var tplValue = $(node).html();
 				templates.push({
 					key: tplKey,
 					value: tplValue
