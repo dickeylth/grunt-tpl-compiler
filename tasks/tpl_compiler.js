@@ -47,7 +47,8 @@ module.exports = function (grunt) {
 			src = src.join('');
 			var $ = cheerio.load(src, {
 				normalizeWhitespace: true,
-				decodeEntities: false
+				decodeEntities: false,
+				lowerCaseAttributeNames: false
 			});
 
 			// 获取各个指定的模板

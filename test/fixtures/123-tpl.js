@@ -1,5 +1,5 @@
 /**
- * KISSY Template Module for test
+ * KISSY Template Module for 123
  */
 KISSY.add(function (S, Juicer) {
     'use strict';
@@ -8,7 +8,10 @@ KISSY.add(function (S, Juicer) {
     * @class Template
     * @constructor
     */
-    var templates = [];
+    var templates = {
+            ProdList: ' <h2>${title}</h2> <ul class="prod-list"> {@each prods as prod} <li class="prod-item">${prod.name} - ${prod.price}</li> {@/each} </ul> ',
+            MoreList: ' <dl data-spmClick="abc"> {@each moreList as item} <dt>${item.title}</dt> <dd>${item.desc}</dd> {@/each} </dl> '
+        };
     return {
         /**
          * 注册模板自定义函数

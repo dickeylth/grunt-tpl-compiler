@@ -1,1 +1,25 @@
-1 2 3
+<body>
+    <div class="page">
+
+        <div id="J_Test" data-tpl="ProdList">
+            <h2>${title}</h2>
+            <ul class="prod-list">
+                {@each prods as prod}
+                <li class="prod-item">${prod.name} - ${prod.price}</li>
+                {@/each}
+            </ul>
+        </div>
+
+        <div class="test2">
+            <section data-tpl="MoreList">
+                <dl data-spmClick="abc">
+                    {@each moreList as item}
+                    <dt>${item.title}</dt>
+                    <dd>${item.desc}</dd>
+                    {@/each}
+                </dl>
+            </section>
+        </div>
+
+    </div>
+</body>
