@@ -62,8 +62,13 @@ module.exports = function (grunt) {
 				});
 			});
 
-			var basename = path.basename(f.src),
-				dirname = path.dirname(f.src),
+			var srcPath = f.src;
+			if (Array.isArray(srcPath)) {
+			  srcPath = srcPath[0];
+      }
+
+			var basename = path.basename(srcPath),
+				dirname = path.dirname(srcPath),
 				toFileName = basename.split('.')[0] + options.ext + '.js',
 				toFilePath = path.join(dirname, toFileName);
 

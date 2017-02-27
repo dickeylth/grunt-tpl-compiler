@@ -189,6 +189,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+- [0.1.6] fix for `this.files.src` is `Array`.
 - [0.1.4] 用 cheerio 替换 jsdom，避免 windows 下 jsdom 安装失败，移除 htmlmin
 - [0.1.3] Bugfix for html escape
 - [0.1.0] 基本功能完成
